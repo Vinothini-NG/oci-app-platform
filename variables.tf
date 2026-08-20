@@ -39,3 +39,8 @@ variable "adb_admin_password" {
   type      = string
   sensitive = true
 }
+
+variable "db_name" {
+  description = "Autonomous Database name"
+  type        = string
+}

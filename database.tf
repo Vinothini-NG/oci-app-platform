@@ -7,7 +7,7 @@ resource "oci_database_autonomous_database" "autonomous_db" {
 
   display_name = "${var.app_name}-${var.environment}-database"
 
-  db_name = "MYADBTF3"
+  db_name = var.db_name
 
   db_workload = "OLTP"
 
