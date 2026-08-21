@@ -33,15 +33,15 @@ resource "oci_load_balancer_backend_set" "application_backend_set" {
 
   policy = "ROUND_ROBIN"
 
-  health_checker {
-    protocol          = "HTTP"
-    port              = 80
-    url_path          = "/"
-    return_code       = 200
-    interval_ms       = 10000
-    timeout_in_millis = 3000
-    retries           = 3
-  }
+health_checker {
+  protocol          = "HTTP"
+  port              = 3000
+  url_path          = "/"
+  return_code       = 200
+  interval_ms       = 10000
+  timeout_in_millis = 3000
+  retries            = 3
+}
 }
 
 
@@ -56,7 +56,7 @@ resource "oci_load_balancer_backend" "application_node1_backend" {
 
   ip_address = oci_core_instance.application_node1.private_ip
 
-  port = 80
+  port = 3000
 
   backup  = false
   drain   = false
