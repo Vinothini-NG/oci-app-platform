@@ -269,6 +269,17 @@ resource "oci_core_security_list" "private_security_list" {
     }
   }
 
+  # Allow application traffic from Load Balancer / VCN
+  ingress_security_rules {
+    source   = "10.0.0.0/16"
+    protocol = "6"
+
+    tcp_options {
+      min = 3000
+      max = 3000
+    }
+  }
+
 
   # Allow ICMP inside the VCN.
   ingress_security_rules {

@@ -33,15 +33,15 @@ resource "oci_load_balancer_backend_set" "application_backend_set" {
 
   policy = "ROUND_ROBIN"
 
-health_checker {
-  protocol          = "HTTP"
-  port              = 3000
-  url_path          = "/"
-  return_code       = 200
-  interval_ms       = 10000
-  timeout_in_millis = 3000
-  retries            = 3
-}
+  health_checker {
+    protocol          = "HTTP"
+    port              = 3000
+    url_path          = "/"
+    return_code       = 200
+    interval_ms       = 10000
+    timeout_in_millis = 3000
+    retries           = 3
+  }
 }
 
 
