@@ -1,0 +1,65 @@
+name: Terraform Module CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform-checks:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # -----------------------------
+      # Checkout
+      # -----------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # Terraform
+      # -----------------------------
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # -----------------------------
+      # Terraform Format
+      # -----------------------------
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      # -----------------------------
+      # Terraform Init
+      # -----------------------------
+      - name: Terraform Init
+        run: terraform init -backend=false
+
+      # -----------------------------
+      # Terraform Validate
+      # -----------------------------
+      - name: Terraform Validate
+        run: terraform validate
+
+      # -----------------------------
+      # TFLint
+      # -----------------------------
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Initialize TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint
+
+      # -----------------------------
+      # Checkov
+      # -----------------------------
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          framework: terraform
